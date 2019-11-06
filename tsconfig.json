@@ -1,0 +1,25 @@
+{
+    "compilerOptions": {
+        "module": "commonjs",
+        "target": "es6",
+        "experimentalDecorators": true,
+        "emitDecoratorMetadata": true,
+        "noEmitHelpers": false,
+        "noEmitOnError": false,
+        "declaration": true,
+        "sourceMap": true,
+        "lib": [
+            "dom",
+            "es2017"
+        ],
+        "baseUrl": ".",
+        "paths": {
+            "*": [
+                "./node_modules/*"
+            ]
+        }
+    },
+    "include": [
+        "."
+    ]
+  }

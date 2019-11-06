@@ -1,0 +1,29 @@
+[
+    {
+        "density": 1.5,
+        "width": 480,
+        "height": 800,
+        "os": "Android",
+        "osVersion": "6.0",
+        "sdkVersion": "23",
+        "folderName" : "images/android23"
+    },
+    {
+        "density": 1.5,
+        "width": 480,
+        "height": 800,
+        "os": "Android",
+        "osVersion": "7.0",
+        "sdkVersion": "25",
+        "folderName" : "images/android25"
+    },
+    {
+        "density": 1.5,
+        "width": 480,
+        "height": 800,
+        "os": "Android",
+        "osVersion": "9",
+        "sdkVersion": "28",
+        "folderName" : "images/android28"
+    }
+]

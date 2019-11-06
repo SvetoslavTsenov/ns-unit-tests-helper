@@ -1,6 +1,6 @@
 export interface IImageComparisonQuery {
     imageName: string;
-    imageData: any;
+    imageData?: any;
     sdkVersion: string;
     osVersion: string;
     model: string;
@@ -9,5 +9,9 @@ export interface IImageComparisonQuery {
     density: number;
     height: number;
     width: number;
+    elementWidth?: number;
+    elementHeight?: number;
+    elementY?: number;
+    elementX?: number;
 }
 export declare const compareImage: (imageComparisonData: IImageComparisonQuery) => Promise<boolean>;

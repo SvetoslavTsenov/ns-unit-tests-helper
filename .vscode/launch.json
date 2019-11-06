@@ -7,14 +7,60 @@
         {
             "type": "node",
             "request": "launch",
-            "name": "Launch Program",
-            "program": "${workspaceFolder}/index.js",
+            "name": "Launch server",
+            "program": "${workspaceFolder}/src/index.js",
             "outFiles": [
-                "${workspaceFolder}/**/*.js"
+                "${workspaceFolder}/src/**/*.js"
             ],
             "args": [
                 "--path","/Users/tsenov/git/unit-testing/app/tests"
             ]
-        }
+        },
+        {
+            "name": "Launch on Android",
+            "type": "nativescript",
+            "request": "launch",
+            "platform": "android",
+            "appRoot": "${workspaceRoot}/demo",
+            "sourceMaps": true,
+            "watch": true
+        },
+        {
+            "name": "Test on Android",
+            "type": "nativescript",
+            "request": "launch",
+            "platform": "android",
+            "appRoot": "${workspaceRoot}/demo",
+            "sourceMaps": true,
+            "watch": true,
+            "stopOnEntry": true,
+            "launchTests": true,
+            "tnsArgs": [
+                "--debug"
+            ]
+        },
+        {
+            "name": "Launch on iOS",
+            "type": "nativescript",
+            "request": "launch",
+            "platform": "ios",
+            "appRoot": "${workspaceRoot}/demo",
+            "sourceMaps": true,
+            "watch": true
+        },
+        {
+            "name": "Test on iOS",
+            "type": "nativescript",
+            "request": "launch",
+            "platform": "ios",
+            "appRoot": "${workspaceRoot}/demo",
+            "sourceMaps": true,
+            "watch": false,
+            "stopOnEntry": true,
+            "launchTests": true,
+            "tnsArgs": [
+                "--justlaunch"
+            ]
+        },
     ]
 }

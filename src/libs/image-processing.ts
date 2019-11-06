@@ -1,11 +1,12 @@
 import * as BlinkDiff from "blink-diff";
 import * as PngJsImage from "pngjs-image";
 import { resolve, extname } from "path";
-import { existsSync, readFileSync, mkdirSync, writeFileSync } from "fs";
+import { existsSync, readFileSync, mkdirSync, writeFileSync, copyFileSync } from "fs";
+import { takeScreenshot } from "./screen-capture-helper";
 
 export interface IImageComparisonQuery {
     imageName: string,
-    imageData: any,
+    imageData?: any,
     sdkVersion: string,
     osVersion: string,
     model: string,
@@ -14,14 +15,15 @@ export interface IImageComparisonQuery {
     density: number,
     height: number,
     width: number,
+    elementWidth?: number;
+    elementHeight?: number;
+    elementY?: number;
+    elementX?: number;
 }
 
 export const compareImage = async (imageComparisonData: IImageComparisonQuery) => {
     const imageStorageByDevice = resolveImagesStorage(imageComparisonData);
-    const { actualImage, expectedImage, diffImage } = resolveImages(
-        imageStorageByDevice,
-        imageComparisonData.imageName,
-        imageComparisonData.imageData);
+    const { actualImage, expectedImage, diffImage } = resolveImages(imageStorageByDevice, imageComparisonData);
 
     const diff = new BlinkDiff({
         imageAPath: actualImage,
@@ -41,20 +43,28 @@ export const compareImage = async (imageComparisonData: IImageComparisonQuery) =
 const saveImageToBase64 = (imageName: string, data: any) => {
     writeFileSync(imageName, data, "base64");
 }
-const resolveImages = (imageStorageByDevice: string, imageName: string, imageData: any) => {
-    const decodeImageData = decodeURIComponent(imageData);
-    imageName = imageName.endsWith(".png") ? imageName : `${imageName}.png`;
+const resolveImages = (imageStorageByDevice: string, imageComparisonData: IImageComparisonQuery) => {
+    const imageData = imageComparisonData.imageData && decodeURIComponent(imageComparisonData.imageData);
+    const imageName = imageComparisonData.imageName.endsWith(".png") ? imageComparisonData.imageName : `${imageComparisonData.imageName}.png`;
     const tempFolder = resolve(imageStorageByDevice, "temp-images");
     if (!existsSync(tempFolder)) {
         mkdirSync(tempFolder);
     }
 
     const actualImage = resolve(tempFolder, imageName);
-    saveImageToBase64(actualImage, decodeImageData);
+    if (imageData) {
+        saveImageToBase64(actualImage, imageData);
+    } else {
+        takeScreenshot(imageComparisonData.os, imageComparisonData.uuid, actualImage);
+    }
 
     const expectedImage = resolve(imageStorageByDevice, imageName);
     if (!existsSync(expectedImage)) {
-        saveImageToBase64(expectedImage, decodeImageData);
+        if (imageData) {
+            saveImageToBase64(expectedImage, imageData);
+        } else {
+            copyFileSync(actualImage, expectedImage);
+        }
     }
 
     const ext = extname(expectedImage);
@@ -92,7 +102,7 @@ const resolveImagesStorage = (imageComparisonData: IImageComparisonQuery) => {
     });
 
     if (devices.length != 1) {
-        throw new Error("Found matching devices should be 1!");
+        throw new Error("Devices count should be 1!");
     }
 
     const deviceStorage = resolve(mainImagesStorage, devices[0].folderName);

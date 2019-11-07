@@ -28,7 +28,7 @@ export class HelloWorldModel extends Observable {
 
         // const r = await compareScreen("test-screen.png");
 
-        const rect = await compareElementByRectangle("test-screent-rect.png", { x: 100, y: 100, width: 200, height: 200 });
+        const rect = await compareElementByRectangle("test-screen-rect.png", { x: 100, y: 100, width: 200, height: 200 });
         console.log("", rect);
     }
 }

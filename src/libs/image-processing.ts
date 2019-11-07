@@ -2,7 +2,7 @@ import * as BlinkDiff from "blink-diff";
 import * as PngJsImage from "pngjs-image";
 import { resolve, extname } from "path";
 import { existsSync, readFileSync, mkdirSync, writeFileSync, copyFileSync } from "fs";
-import { takeScreenshot } from "./device-screen-capture-helper";
+import { takeScreenshot } from "./device-controller/screen-capture-helper";
 
 export interface IImageComparisonQuery {
     imageName: string,

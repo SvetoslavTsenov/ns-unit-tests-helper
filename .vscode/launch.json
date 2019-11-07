@@ -13,7 +13,7 @@
                 "${workspaceFolder}/src/**/*.js"
             ],
             "args": [
-                "--path","/Users/tsenov/git/unit-testing/app/tests"
+                "--path","/Users/tsenov/git/ns-unit-tests-helper/demo/app/tests"
             ]
         },
         {
